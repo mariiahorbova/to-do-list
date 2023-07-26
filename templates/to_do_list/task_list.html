@@ -10,7 +10,6 @@
   {% if task_list %}
     <div>
       {% for task in task_list %}
-        <li>
           <form action="{% url 'to_do_list:task-update-state' pk=task.id %}" method="post">
             {% csrf_token %}
             {% if task.is_done %}
@@ -31,15 +30,20 @@
           {% else %}
             <button class="btn-success">DONE</button>
           {% endif %}
-          <h6>Created at: {{ task.creation_date }}</h6>
-          <h6>Tags: {% for tag in task.tags.all %} {{ tag }} {% endfor %}</h6>
-          <a href="{% url 'to_do_list:task-update' pk=task.id %}" class="btn btn-primary link-to-page">
+          <h6>Created at: {{ task.creation_date }}
+          {% if task.deadline %}
+            Deadline: {{ task.deadline }}
+          {% endif %}
+          </h6>
+          <h6 class="text-muted">Tags: {% for tag in task.tags.all %} {{ tag }} {% endfor %}
+          <a href="{% url 'to_do_list:task-update' pk=task.id %}">
             Update
           </a>
-          <a href="{% url 'to_do_list:tag-delete' pk=task.id %}" class="btn btn-primary link-to-page">
+          <a href="{% url 'to_do_list:tag-delete' pk=task.id %}">
             Delete
           </a>
-        </li>
+          </h6>
+        <hr>
       {% endfor %}
     </div>
   {% else %}
