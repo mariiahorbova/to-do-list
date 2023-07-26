@@ -11,8 +11,13 @@
     <div>
       {% for task in task_list %}
         <li>
-          <a href="{% url "to_do_list:task-detail" pk=task.id %} ">{{ task.content }}</a>
-          {{ task.creation_date }}
+          <strong><a href="{% url "to_do_list:task-detail" pk=task.id %} ">{{ task.content }}</a></strong>
+          {% if task.is_done %}
+            <button class="btn-danger">NOT DONE</button>
+          {% else %}
+            <button class="btn-success">DONE</button>
+          {% endif %}
+          <h6>{{ task.creation_date }}</h6>
           <h6>Tags: {% for tag in task.tags.all %} {{ tag }} {% endfor %}</h6>
           <a href="{% url 'to_do_list:task-update' pk=task.id %}" class="btn btn-primary link-to-page">
             Update
