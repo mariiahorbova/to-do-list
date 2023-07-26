@@ -11,13 +11,27 @@
     <div>
       {% for task in task_list %}
         <li>
+          <form action="{% url 'to_do_list:task-update-state' pk=task.id %}" method="post">
+            {% csrf_token %}
+            {% if task.is_done %}
+              <input
+                    type="submit"
+                    class="btn btn-secondary link-to-page"
+                    value="Undo" />
+            {% else %}
+              <input
+                    type="submit"
+                    class="btn btn-success link-to-page"
+                    value="Complete" />
+            {% endif %}
+          </form>
           <strong><a href="{% url "to_do_list:task-detail" pk=task.id %} ">{{ task.content }}</a></strong>
-          {% if task.is_done %}
+          {% if not task.is_done %}
             <button class="btn-danger">NOT DONE</button>
           {% else %}
             <button class="btn-success">DONE</button>
           {% endif %}
-          <h6>{{ task.creation_date }}</h6>
+          <h6>Created at: {{ task.creation_date }}</h6>
           <h6>Tags: {% for tag in task.tags.all %} {{ tag }} {% endfor %}</h6>
           <a href="{% url 'to_do_list:task-update' pk=task.id %}" class="btn btn-primary link-to-page">
             Update

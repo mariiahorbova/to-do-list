@@ -11,6 +11,9 @@ class Task(models.Model):
         related_name="tasks"
     )
 
+    class Meta:
+        ordering = ["is_done", "-creation_date"]
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
