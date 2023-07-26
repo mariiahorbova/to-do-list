@@ -35,7 +35,7 @@ class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
-    queryset = Task.objects.all().select_related("tags")
+    queryset = Task.objects.all().prefetch_related("tags")
 
 
 class TagListView(LoginRequiredMixin, generic.ListView):
