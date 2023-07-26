@@ -1,0 +1,18 @@
+body {
+    margin: 20px;
+}
+
+.link-to-page {
+    float: right;
+    margin: 0 2px 0 2px;
+}
+
+.not-done {
+    color: red;
+    font-weight: bold;
+}
+
+.done {
+    color: forestgreen;
+    font-weight: bold;
+}
