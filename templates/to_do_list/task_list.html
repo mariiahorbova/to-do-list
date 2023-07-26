@@ -3,33 +3,34 @@
 {% block content %}
   <h1>
     TODO list
-    <a href="{% url 'to_do_list:task-create' %}" class="btn btn-primary link-to-page">
+    <a href="{% url 'to_do_list:task-create' %}" class="float-right btn btn-primary link-to-page">
       Add task
     </a>
   </h1>
   {% if task_list %}
     <div>
       {% for task in task_list %}
-          <form action="{% url 'to_do_list:task-update-state' pk=task.id %}" method="post">
-            {% csrf_token %}
-            {% if task.is_done %}
-              <input
-                    type="submit"
-                    class="btn btn-secondary link-to-page"
-                    value="Undo" />
-            {% else %}
-              <input
-                    type="submit"
-                    class="btn btn-success link-to-page"
-                    value="Complete" />
-            {% endif %}
-          </form>
           <strong><a href="{% url "to_do_list:task-detail" pk=task.id %} ">{{ task.content }}</a></strong>
+
           {% if not task.is_done %}
-            <button class="btn-danger">NOT DONE</button>
+            <span class="not-done">NOT DONE</span>
           {% else %}
-            <button class="btn-success">DONE</button>
+            <span class="done">DONE</span>
           {% endif %}
+            <form class="float-right" action="{% url 'to_do_list:task-update-state' pk=task.id %}" method="post">
+              {% csrf_token %}
+              {% if task.is_done %}
+                <input
+                      type="submit"
+                      class="btn btn-secondary link-to-page"
+                      value="Undo" />
+              {% else %}
+                <input
+                      type="submit"
+                      class="btn btn-success link-to-page"
+                      value="Complete" />
+              {% endif %}
+            </form>
           <h6>Created at: {{ task.creation_date }}
           {% if task.deadline %}
             Deadline: {{ task.deadline }}
