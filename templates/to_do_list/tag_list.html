@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Tag list
+    <a href="{% url 'to_do_list:tag-create' %}" class="btn btn-primary link-to-page">
+      Create
+    </a>
+  </h1>
+  {% if tag_list %}
+    <ul>
+      {% for tag in tag_list %}
+        <li>
+          {{ tag.name }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no tags.</p>
+  {% endif %}
+{% endblock %}
